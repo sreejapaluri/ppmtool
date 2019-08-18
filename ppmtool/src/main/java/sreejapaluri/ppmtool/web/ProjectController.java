@@ -11,6 +11,7 @@ import sreejapaluri.ppmtool.services.MapValidationErrorService;
 import sreejapaluri.ppmtool.services.ProjectService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ProjectController {
 
     @PostMapping("")
 
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result, Principal principal){
 
 
 
@@ -52,23 +53,19 @@ public class ProjectController {
 
 
 
-        Project project1 = projectService.saveOrUpdateProject(project);
+        Project project1 = projectService.saveOrUpdateProject(project, principal.getName());
 
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
 
     }
 
-
-
-
-
     @GetMapping("/{projectId}")
 
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId, Principal principal){
 
 
 
-        Project project = projectService.findProjectByIdentifier(projectId);
+        Project project = projectService.findProjectByIdentifier(projectId, principal.getName());
 
 
 
@@ -76,23 +73,15 @@ public class ProjectController {
 
     }
 
-
-
-
-
     @GetMapping("/all")
 
-    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
-
-
-
-
+    public Iterable<Project> getAllProjects(Principal principal){return projectService.findAllProjects(principal.getName());}
 
     @DeleteMapping("/{projectId}")
 
-    public ResponseEntity<?> deleteProject(@PathVariable String projectId){
+    public ResponseEntity<?> deleteProject(@PathVariable String projectId, Principal principal){
 
-        projectService.deleteProjectByIdentifier(projectId);
+        projectService.deleteProjectByIdentifier(projectId, principal.getName());
 
 
 
@@ -101,5 +90,4 @@ public class ProjectController {
     }
 
 }
-
 

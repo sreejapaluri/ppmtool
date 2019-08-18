@@ -17,6 +17,7 @@ public class ProjectTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
+
     @Column(updatable = false, unique = true)
 
     private String projectSequence;
@@ -35,7 +36,7 @@ public class ProjectTask {
 
     //ManyToOne with Backlog
 
-    @ManyToOne(fetch = FetchType.EAGER) //REMOVE REFRESH
+    @ManyToOne(fetch = FetchType.EAGER)
 
     @JoinColumn(name="backlog_id", updatable = false, nullable = false)
 

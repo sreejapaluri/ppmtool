@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 
 import java.util.Date;
 
-
-
 @Entity
 
 public class Project {
@@ -66,6 +64,24 @@ public class Project {
     @JsonIgnore
 
     private Backlog backlog;
+
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JsonIgnore
+
+    private User user;
+
+
+
+
+
+    private String projectLeader;
+
+
+
+
 
 
 
@@ -219,6 +235,38 @@ public class Project {
 
 
 
+    public User getUser() {
+
+        return user;
+
+    }
+
+
+
+    public void setUser(User user) {
+
+        this.user = user;
+
+    }
+
+
+
+    public String getProjectLeader() {
+
+        return projectLeader;
+
+    }
+
+
+
+    public void setProjectLeader(String projectLeader) {
+
+        this.projectLeader = projectLeader;
+
+    }
+
+
+
     @PrePersist
 
     protected void onCreate(){
@@ -236,5 +284,7 @@ public class Project {
         this.updated_At = new Date();
 
     }
+
+
 
 }
